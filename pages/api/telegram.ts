@@ -30,10 +30,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  console.log("req", req);
   if (req.method !== "POST") {
     return res
       .status(405)
-      .json({ success: false, message: "Method Not Allowed" });
+      .json({ success: false, message: "Method Not Allowed", req });
   }
 
   try {
