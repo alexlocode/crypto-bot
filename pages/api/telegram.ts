@@ -49,25 +49,25 @@ export default async function handler(
 
       switch (command) {
         case "test":
-          sendMessage({
+          await sendMessage({
             chatId,
             message: "里長測試!!!!!",
           });
 
         default:
-          sendMessage({
+          await sendMessage({
             chatId,
             message: "沒有這個指令",
           });
       }
     } else {
-      sendMessage({
+      await sendMessage({
         chatId,
         message: `自動回話: ${messageText}`,
       });
     }
 
-    res.status(200).json({ message: "Hello from Next.js!" });
+    res.status(200).json({ messageText: "success!" });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error(error);
