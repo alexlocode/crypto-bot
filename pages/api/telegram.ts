@@ -50,19 +50,19 @@ export default async function handler(
 
       switch (command) {
         case "test":
-          await sendMessage({
+          sendMessage({
             chatId,
             message: "里長測試!!!!!",
           });
 
         default:
-          await sendMessage({
+          sendMessage({
             chatId,
             message: "沒有這個指令",
           });
       }
     } else {
-      await sendMessage({
+      sendMessage({
         chatId,
         message: `自動回話: ${messageText}`,
       });

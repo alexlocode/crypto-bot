@@ -43,12 +43,9 @@ export default async function handler(
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  // 執行任務邏輯
-  console.log(`[${new Date().toISOString()}] Running scheduled task...`);
-
   let taskResult = "任務執行成功!";
   try {
-    await sendMessage({
+    sendMessage({
       chatId: process.env.NEXT_PUBLIC_CHAT_ID as string,
       message: "測試排程",
     });

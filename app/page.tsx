@@ -1,10 +1,6 @@
 "use client";
 
 const Home = () => {
-  console.log(
-    "process.env.NEXT_PUBLIC_CHAT_ID",
-    process.env.NEXT_PUBLIC_CHAT_ID
-  );
   const sendMessage = async () => {
     try {
       await fetch("/api/telegram", {
