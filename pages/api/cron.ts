@@ -8,21 +8,6 @@ interface MessageObj {
   message: string;
 }
 
-// const testCornTGMessage = async () => {
-//   await fetch("/api/telegram", {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify({
-//       message: {
-//         chat: {
-//           id: process.env.NEXT_PUBLIC_CHAT_ID,
-//         },
-//         text: "測試排程",
-//       },
-//     }),
-//   });
-// };
-
 const sendMessage = (messageObj: MessageObj) => {
   return fetch(`${TELEGRAM_API_URL}/sendMessage`, {
     method: "POST",
@@ -45,7 +30,7 @@ export default async function handler(
 
   let taskResult = "任務執行成功!";
   try {
-    sendMessage({
+    await sendMessage({
       chatId: process.env.NEXT_PUBLIC_CHAT_ID as string,
       message: "測試排程",
     });

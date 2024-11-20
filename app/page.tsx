@@ -11,7 +11,7 @@ const Home = () => {
             chat: {
               id: process.env.NEXT_PUBLIC_CHAT_ID,
             },
-            text: "阿是在點什麼拉",
+            text: "點點點....",
           },
         }),
       });
@@ -24,12 +24,12 @@ const Home = () => {
     <div className="bg-[#323232] min-h-screen">
       <div className="py-10 px-10">
         <div className="bg-white p-5 rounded w-[200px] text-center">
-          <div className="pb-4">telegram測試發訊息</div>
+          <div className="pb-4">telegram測試發訊息 0.1</div>
           <button
             className="py-1 px-3 border rounded bg-black text-white"
             onClick={sendMessage}
           >
-            click
+            點點
           </button>
         </div>
       </div>

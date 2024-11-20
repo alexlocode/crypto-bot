@@ -1,19 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import type { TelegramMessage, MessageObj } from "@/interfaces";
 
-const TELEGRAM_BOT_TOKEN = process.env.TG_TOKEN; // 從 BotFather 獲取
+const TELEGRAM_BOT_TOKEN = process.env.TG_TOKEN;
 const TELEGRAM_API_URL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
-
-interface TelegramMessage {
-  message: {
-    chat: { id: number };
-    text: string;
-  };
-}
-
-interface MessageObj {
-  chatId: number;
-  message: string;
-}
 
 const sendMessage = (messageObj: MessageObj) => {
   return fetch(`${TELEGRAM_API_URL}/sendMessage`, {
@@ -30,7 +19,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  console.log("req", req);
   if (req.method !== "POST") {
     return res
       .status(405)
@@ -50,19 +38,21 @@ export default async function handler(
 
       switch (command) {
         case "test":
-          sendMessage({
+          await sendMessage({
             chatId,
             message: "里長測試!!!!!",
           });
+          break;
 
         default:
-          sendMessage({
+          await sendMessage({
             chatId,
             message: "沒有這個指令",
           });
+          break;
       }
     } else {
-      sendMessage({
+      await sendMessage({
         chatId,
         message: `自動回話: ${messageText}`,
       });
