@@ -12,7 +12,7 @@ const Home = () => {
             chat: {
               id: process.env.NEXT_PUBLIC_CHAT_ID,
             },
-            text: "testing...",
+            text: "testing....",
           },
         }),
       });
