@@ -31,8 +31,8 @@ export default async function handler(
   let taskResult = "任務執行成功!";
   try {
     await sendMessage({
-      chatId: process.env.NEXT_PUBLIC_CHAT_ID as string,
-      message: "測試排程: 晚上10:50",
+      chatId: "1361998552",
+      message: "整日排程測試",
     });
   } catch (error) {
     console.log(`error: ${error}`);
