@@ -32,7 +32,7 @@ export default async function handler(
   try {
     await sendMessage({
       chatId: process.env.NEXT_PUBLIC_CHAT_ID as string,
-      message: "測試排程中: 晚上9點半先來一發",
+      message: "測試排程: 晚上10:50",
     });
   } catch (error) {
     console.log(`error: ${error}`);

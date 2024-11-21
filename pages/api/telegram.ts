@@ -27,6 +27,7 @@ export default async function handler(
 
   try {
     const body: TelegramMessage = req.body;
+
     const chatId = body.message.chat.id;
     const text = body.message.text;
 
@@ -45,17 +46,8 @@ export default async function handler(
           break;
 
         default:
-          await sendMessage({
-            chatId,
-            message: "沒有這個指令",
-          });
           break;
       }
-    } else {
-      await sendMessage({
-        chatId,
-        message: `自動回話: ${messageText}`,
-      });
     }
 
     res.status(200).json({ messageText: "success!" });
