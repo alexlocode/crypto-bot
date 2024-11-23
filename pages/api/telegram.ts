@@ -96,7 +96,7 @@ export default async function handler(
   } catch (error: any) {
     console.error(error);
     await sendMessage({
-      chatId: req.body.chat.id,
+      chatId: req.body.message.chat.id,
       message: `Error: ${error.message}`,
     });
     return res.status(200).json({ success: false, message: error.message });
