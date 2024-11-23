@@ -1,20 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import type { TelegramMessage, MessageObj } from "@/interfaces";
-
-const TELEGRAM_BOT_TOKEN = process.env.TG_TOKEN;
-const TELEGRAM_API_URL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}`;
+import type { TelegramMessage } from "@/interfaces";
 const BOT_USERNAME = "@w04ru6_bot";
-
-const sendMessage = (messageObj: MessageObj) => {
-  return fetch(`${TELEGRAM_API_URL}/sendMessage`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: messageObj.chatId,
-      text: messageObj.message,
-    }),
-  });
-};
+import { sendMessage } from "@/services/telegramService";
 
 export default async function handler(
   req: NextApiRequest,
