@@ -120,59 +120,63 @@ const getKline = async ({
   interval = "30m",
   limit = "500",
 }: GetKlineProps): Promise<CombinedKline[]> => {
-  const res = await fetch(
-    `https://fapi.binance.com/fapi/v1/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`
-  );
+  try {
+    const res = await fetch(
+      `https://fapi.binance.com/fapi/v1/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`
+    );
 
-  const data = await res.json();
-
-  const klineData: klineObj[] = data.map((kline: OriginKline) => {
-    return {
-      openTime: dayjs(kline[0]).format("YYYY-MM-DD HH:mm"), // 開盤時間
-      open: parseFloat(kline[1]), // 開盤
-      high: parseFloat(kline[2]), // 高點
-      low: parseFloat(kline[3]), //  低點
-      close: parseFloat(kline[4]), //  收盤
-      volume: parseFloat(kline[5]), //  成交量
-      closeTime: dayjs(kline[6]).format("YYYY-MM-DD HH:mm"), //  收盤時間
-    };
-  });
-
-  //  收盤價計算macd
-  const closePrice = data.map((kline: OriginKline) => parseFloat(kline[4]));
-
-  const macdResult = MACD.calculate({
-    values: closePrice,
-    fastPeriod: 12,
-    slowPeriod: 26,
-    signalPeriod: 9,
-    SimpleMAOscillator: false,
-    SimpleMASignal: false,
-  });
-
-  //  因為macd計算關係，最開頭幾筆資料算不出來，所以進行切片
-  const offset = klineData.length - macdResult.length;
-  const alignedKlineData = klineData.slice(offset); // 從 offset 開始切片 klineData
-
-  //  組合原始kline data + macd data
-  const combinedData = alignedKlineData
-    .map((kline: klineObj, index: number) => {
-      const macd = macdResult[index] || {
-        MACD: 0,
-        signal: 0,
-        histogram: 0,
-      }; // 確保不會出現 undefined
-
+    const data = await res.json();
+    const klineData: klineObj[] = data.map((kline: OriginKline) => {
       return {
-        ...kline, // 將 kline 的屬性合併到這個物件中
-        macd: macd.MACD as number,
-        signal: macd.signal as number,
-        histogram: macd.histogram as number,
+        openTime: dayjs(kline[0]).format("YYYY-MM-DD HH:mm"), // 開盤時間
+        open: parseFloat(kline[1]), // 開盤
+        high: parseFloat(kline[2]), // 高點
+        low: parseFloat(kline[3]), //  低點
+        close: parseFloat(kline[4]), //  收盤
+        volume: parseFloat(kline[5]), //  成交量
+        closeTime: dayjs(kline[6]).format("YYYY-MM-DD HH:mm"), //  收盤時間
       };
-    })
-    .filter((data) => data.histogram !== null);
+    });
 
-  return combinedData;
+    //  收盤價計算macd
+    const closePrice = data.map((kline: OriginKline) => parseFloat(kline[4]));
+
+    const macdResult = MACD.calculate({
+      values: closePrice,
+      fastPeriod: 12,
+      slowPeriod: 26,
+      signalPeriod: 9,
+      SimpleMAOscillator: false,
+      SimpleMASignal: false,
+    });
+
+    //  因為macd計算關係，最開頭幾筆資料算不出來，所以進行切片
+    const offset = klineData.length - macdResult.length;
+    const alignedKlineData = klineData.slice(offset); // 從 offset 開始切片 klineData
+
+    //  組合原始kline data + macd data
+    const combinedData = alignedKlineData
+      .map((kline: klineObj, index: number) => {
+        const macd = macdResult[index] || {
+          MACD: 0,
+          signal: 0,
+          histogram: 0,
+        }; // 確保不會出現 undefined
+
+        return {
+          ...kline, // 將 kline 的屬性合併到這個物件中
+          macd: macd.MACD as number,
+          signal: macd.signal as number,
+          histogram: macd.histogram as number,
+        };
+      })
+      .filter((data) => data.histogram !== null);
+
+    return combinedData;
+  } catch (error) {
+    console.log("error", error);
+    throw new Error("獲取k線失敗");
+  }
 };
 
 const getCoinAnalytics = async ({ symbol, interval, limit }: GetKlineProps) => {

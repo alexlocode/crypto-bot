@@ -95,6 +95,10 @@ export default async function handler(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error(error);
-    return res.status(500).json({ success: false, message: error.message });
+    await sendMessage({
+      chatId: req.body.chat.id,
+      message: `Error: ${error.message}`,
+    });
+    return res.status(200).json({ success: false, message: error.message });
   }
 }
