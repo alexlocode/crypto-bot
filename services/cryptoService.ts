@@ -126,6 +126,8 @@ const getKline = async ({
     );
 
     const data = await res.json();
+
+    console.log("data", data);
     const klineData: klineObj[] = data.map((kline: OriginKline) => {
       return {
         openTime: dayjs(kline[0]).format("YYYY-MM-DD HH:mm"), // 開盤時間
@@ -138,8 +140,12 @@ const getKline = async ({
       };
     });
 
+    console.log("klineData", klineData);
+
     //  收盤價計算macd
     const closePrice = data.map((kline: OriginKline) => parseFloat(kline[4]));
+
+    console.log("closePrice", closePrice);
 
     const macdResult = MACD.calculate({
       values: closePrice,
@@ -149,6 +155,7 @@ const getKline = async ({
       SimpleMAOscillator: false,
       SimpleMASignal: false,
     });
+    console.log("macdResult", macdResult);
 
     //  因為macd計算關係，最開頭幾筆資料算不出來，所以進行切片
     const offset = klineData.length - macdResult.length;
@@ -171,6 +178,8 @@ const getKline = async ({
         };
       })
       .filter((data) => data.histogram !== null);
+
+    console.log("combinedData", combinedData);
 
     return combinedData;
   } catch (error) {
