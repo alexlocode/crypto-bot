@@ -1,32 +1,43 @@
 "use client";
-import { getKline, calculateReversals } from "@/services/cryptoService";
+import CryptoForm from "@/components/cryptoForm";
+import CryptoTable from "@/components/cryptoTable";
+import { getCoinAnalytics } from "@/services/cryptoService";
+import { useState } from "react";
+import type { GetKlineProps, CoinAnalytics } from "@/interfaces";
+import { Toaster } from "@/components/ui/toaster";
+import { useToast } from "@/hooks/use-toast";
 
 const Home = () => {
-  const getKlineAnalytics = async () => {
-    const kline = await getKline({
-      symbol: "NOTUSDT",
-      interval: "30m",
-      limit: "1500",
-    });
+  const { toast } = useToast();
+  const [data, setData] = useState<CoinAnalytics>();
 
-    calculateReversals({
-      combinedData: kline,
-    });
+  const getData = async (data: GetKlineProps) => {
+    try {
+      const res = await getCoinAnalytics(data);
+      setData(res);
+      toast({
+        description: "獲取資料成功!",
+      });
+    } catch (error) {
+      console.log("error", error);
+      toast({
+        variant: "destructive",
+        description: "獲取資料失敗!",
+      });
+    }
   };
-
   return (
-    <div className="bg-[#323232] min-h-screen">
-      <div className="flex flex-col gap-5 pt-3 pl-3">
-        <div className="bg-white p-5 rounded w-[200px] text-center">
-          <div className="pb-4">測試NOTUSDT</div>
-          <button
-            className="py-1 px-3 border rounded bg-black text-white"
-            onClick={getKlineAnalytics}
-          >
-            click
-          </button>
+    <div className="bg-[#323232] min-h-screen pt-[100px]">
+      <div className="m-auto w-[1000px] bg-white rounded p-5">
+        <h1 className="text-xl font-bold text-center pb-3">幣安合約策略計算</h1>
+        <CryptoForm formSubmit={getData} />
+
+        <div className="py-5">
+          <CryptoTable data={data} />
         </div>
       </div>
+
+      <Toaster />
     </div>
   );
 };

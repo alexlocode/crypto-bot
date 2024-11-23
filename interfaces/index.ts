@@ -52,3 +52,15 @@ export interface CalculateReversalsProps {
   takeProfit?: number;
   stopLoss?: number;
 }
+
+export interface CoinAnalytics {
+  symbol: string;
+  interval?: string;
+  limit?: string;
+  reversalCount?: number;
+  profitHitCount?: number;
+  lossHitCount?: number;
+  downwardProfitHitCount?: number;
+  downwardLossHitCount?: number;
+  ignoredReversalCount?: number;
+}
