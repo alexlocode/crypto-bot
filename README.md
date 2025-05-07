@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Alex Crypto Bot
 
-## Getting Started
+這是一個使用 Next.js 和 TypeScript 開發的加密貨幣交易機器人專案。
 
-First, run the development server:
+## 功能特點
 
+- 使用 Next.js 15.0.3 框架
+- 採用 TypeScript 進行開發
+- 整合 Tailwind CSS 進行樣式設計
+- 使用 React Hook Form 處理表單
+- 整合技術分析指標庫 (technicalindicators)
+- 現代化的 UI 組件 (使用 Radix UI)
+
+## 技術棧
+
+- **前端框架**: Next.js 15.0.3
+- **程式語言**: TypeScript
+- **UI 框架**: 
+  - Tailwind CSS
+  - Radix UI 組件
+- **表單處理**: React Hook Form
+- **驗證**: Zod
+- **技術分析**: technicalindicators
+
+## 開始使用
+
+### 前置需求
+
+- Node.js (建議使用最新的 LTS 版本)
+- Yarn 套件管理器
+
+### 安裝步驟
+
+1. 克隆專案
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone [repository-url]
+cd alex-crypto-bot
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. 安裝依賴
+```bash
+yarn install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. 啟動開發伺服器
+```bash
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. 開啟瀏覽器訪問 [http://localhost:3000](http://localhost:3000)
 
-## Learn More
+### 其他可用指令
 
-To learn more about Next.js, take a look at the following resources:
+- `yarn build` - 建置生產版本
+- `yarn start` - 啟動生產伺服器
+- `yarn lint` - 執行程式碼檢查
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 專案結構
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+alex-crypto-bot/
+├── app/              # Next.js 應用程式目錄
+├── components/       # React 組件
+├── hooks/           # 自定義 React Hooks
+├── interfaces/      # TypeScript 介面定義
+├── lib/             # 工具函數和通用程式碼
+├── pages/           # 頁面組件
+├── public/          # 靜態資源
+└── services/        # API 服務和外部整合
+```
 
-## Deploy on Vercel
+## 開發指南
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 使用 TypeScript 進行開發
+- 遵循 ESLint 規範
+- 使用 Tailwind CSS 進行樣式設計
+- 組件開發遵循 React 最佳實踐
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 授權
+
+[授權類型] - 詳見 LICENSE 文件
