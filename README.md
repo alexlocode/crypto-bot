@@ -1,4 +1,4 @@
-# Alex Crypto Bot
+# Crypto Bot
 
 這是一個使用 Next.js 和 TypeScript 開發的加密貨幣交易機器人專案。
 
